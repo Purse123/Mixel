@@ -14,11 +14,19 @@ namespace csvview {
   class CSVParser {
   private:
     Table values_;
+    std::string filePath_;
+    std::string lockPath_;
     
   public:
     int parse(const char* file_path);
     void normalizeTable();
     const Table& getTable() const;
 
+    // TODOS: void createLock();
+    // TODOS: void removeLock();
   };
+
+  // ~CSVParser() {
+  //   removeLock();
+  // }
 }

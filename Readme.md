@@ -1,2 +1,5 @@
+> Looking for hot reloading for a while
+# Mixel
+
 ## TODOS
-- RAII implementation
+- [RAII(Resource Acquisition is initialization) implementation](https://en.cppreference.com/w/cpp/language/raii.html)
