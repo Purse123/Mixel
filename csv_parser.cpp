@@ -1,12 +1,18 @@
 #include "csv_parser.hpp"
+#include "table_model.hpp"
+#include "table_model.hpp"
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <utility>
 
 using csvview::Row;
 using csvview::Table;
 
-int csvview::CSVParser::parse(const char* file_path) {
+/*
+ *@brief: Its was storing parse data in same class private variable
+int csvview::CSVParser::parse(const std::string file_path) {
   std::ifstream fp(file_path);
   if (!fp.is_open()) {
     std::cerr << "Error opening file" << std::endl;
@@ -31,22 +37,29 @@ int csvview::CSVParser::parse(const char* file_path) {
   fp.close();
   return count;
 }
+*/
 
-void csvview::CSVParser::normalizeTable() {
-  size_t maxCols = 0;
+
+csvview::TableModel csvview::CSVParser::parse(const std::string file_path) {
+  std::ifstream fp(file_path);
+  if (!fp.is_open()) {
+    throw std::runtime_error("Error opening file");
+  }
+
+  Table table;
+  std::string line;
   
-  // @result = max column in each row
-  for (const auto& row : values_)
-    if (row.size() > maxCols)
-      maxCols = row.size();
-
-  // adding empty string field for padding
-  for (auto& row : values_)
-    while (row.size() < maxCols)
-      row.push_back("*");
-}
+  while (std::getline(fp, line)) {
+    Row row;
+    std::stringstream ss(line);
+    std::string token;
     
-const Table& csvview::CSVParser::getTable() const {
-  return values_;
+    while (std::getline(ss, token, ',')) {
+      row.push_back(token);
+    }
+    table.push_back(std::move(row));
+  }
+  
+  fp.close();
+  return csvview::TableModel(std::move(table));
 }
-

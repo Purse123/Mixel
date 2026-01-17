@@ -1,20 +1,23 @@
 CC = g++
 CFLAGS = -Wall -Wextra
 
-csv_parser.o: csv_parser.cpp
+build/table_model.o: table_model.cpp
 	$(CC) $^ -c -o $@ $(CFLAGS)
 
-viewer.o: viewer.cpp
+build/csv_parser.o: csv_parser.cpp
 	$(CC) $^ -c -o $@ $(CFLAGS)
 
-main.o: main.cpp 
+build/viewer.o: viewer.cpp
 	$(CC) $^ -c -o $@ $(CFLAGS)
 
-cell_method.o: cell_method.cpp
+build/main.o: main.cpp 
 	$(CC) $^ -c -o $@ $(CFLAGS)
 
-main: main.o csv_parser.o viewer.o cell_method.o
+build/cell_method.o: cell_method.cpp
+	$(CC) $^ -c -o $@ $(CFLAGS)
+
+main: build/main.o build/csv_parser.o build/viewer.o build/cell_method.o build/table_model.o
 	$(CC) $^ -o $@ $(CFLAGS)
 
 clean:
-	rm *~ *.o main
+	rm *~ build/*.o main

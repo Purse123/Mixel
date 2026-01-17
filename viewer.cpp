@@ -1,7 +1,7 @@
 #include "viewer.hpp"
 #include <iostream>
 
-void csvview::Viewer::viewTable(const Table& t) {
+void csvview::Viewer::view(const Table& t) {
   for (const auto& r: t) {
     for (const auto& x: r) {
       std::cout << x << " ";

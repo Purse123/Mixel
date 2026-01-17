@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include "csv_types.hpp"
+#include "table_model.hpp"
 
 /*
   Used CSV format
@@ -10,7 +11,27 @@
 */
 
 namespace csvview {
-
+  /**
+   *@class CSVParser
+   *@brief
+   * Parses CSV files into structured TableModel object
+   * TODOS: To add mechanism for lock file
+   *
+   * CSVParser class is responsible for reading CSV file from disk and convert them into TableModel object, which owns and manages table data. CSVParser doesn't itself store the table value.
+   *
+   *Desgin note:
+   *  CSVParser acts as a factory, It produces TableModel obj but doesn't manages lifetime
+   *  Exception are thrown for file I/O error or unrecoverable issue
+   *  It supports parsing // formula handling and file locking
+   *
+   *Example usage:
+   *  CSVParser parser;
+   *  TableModel model = parser.parse("example.csv");
+   *  Viewer::view(model);
+   *
+   *@see class TabelModel
+   *@see class Viewer
+   */
   class CSVParser {
   private:
     Table values_;
@@ -18,15 +39,12 @@ namespace csvview {
     std::string lockPath_;
     
   public:
-    int parse(const char* file_path);
-    void normalizeTable();
-    const Table& getTable() const;
-
+    csvview::TableModel parse(const std::string file_path);
     // TODOS: void createLock();
     // TODOS: void removeLock();
+    
+    // ~CSVParser() {
+    //   removeLock();
+    // }
   };
-
-  // ~CSVParser() {
-  //   removeLock();
-  // }
 }

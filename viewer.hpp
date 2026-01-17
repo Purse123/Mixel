@@ -4,6 +4,6 @@
 namespace csvview {
   class Viewer {
   public:
-    static void viewTable(const csvview::Table& t);
+    static void view(const csvview::Table& t);
   };
 }
