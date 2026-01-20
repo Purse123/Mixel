@@ -9,8 +9,20 @@
 
 int main() {
   csvview::CSVParser parser;
-  csvview::TableModel model = parser.parse("test.csv");
-  csvview::Viewer::view(model.data());
+  csvview::TableModel table = parser.parse("test.csv");
+  csvview::Viewer::view(table.data());
+
+  std::cout << std::endl << "After:" << std::endl;
+  table.evaluateAll();
+
+  // print after eval result
+  const auto& data = table.data();
+  for (size_t r = 0; r < data.size(); ++r) {
+    for (size_t c = 0; c < data[r].size(); ++c) {
+      std::cout << data[r][c] << "\t";
+    }
+    std::cout << "\n";
+  }
 
   std::cout << csvview::colNameToIndex("B") << std::endl;
   std::cout << csvview::indexToColName(27) << std::endl;
