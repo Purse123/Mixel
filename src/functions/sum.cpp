@@ -1,8 +1,8 @@
 #include "functions/sum.hpp"
 
-double Formula::SumFunction::evaluate(const std::vector<double>& arg) const {
+double Formula::SumFunction::evaluate(const std::vector<double>& args) const {
   double sumRes = 0;
   for (double v: args)
-    sum += v;
+    sumRes += v;
   return sumRes;
 }

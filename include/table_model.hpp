@@ -1,3 +1,5 @@
+// table_model.hpp
+// Copyright (c) 2026 Pierce Neupane - CC BY 4.0
 #pragma once
 #include "csv_types.hpp"
 #include "formula.hpp"
@@ -67,7 +69,17 @@ namespace csvview {
     Formula::FunctionCall parseFunction(const std::string& expr);
 
     double evaluateExpression(const std::string& expr);
-    double evaluateFunction(const std::string& expr);    
+
+    // ================= Evaluate methods ========================
+    double evaluateFunction(const std::string& expr);
+
+    std::vector<csvview::CellRange>
+    extractRangesFromFormula(const std::string& args);
+    
+    std::vector<csvview::CellRef>
+    expandRanges(const std::vector<csvview::CellRange>& ranges);
+    // ============================================================
+    
     // TODOS: const Cell& at(const CellRef&) const;
     // TODOS: Cell& at(const CellRef&);
     // TODOS: void addRow(const Row&);

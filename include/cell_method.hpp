@@ -1,7 +1,9 @@
+// cell_method.hpp
+// Copyright (c) 2026 Pierce Neupane - CC BY 4.0
 #pragma once
+#include "csv_types.hpp"
 #include <iostream>
 #include <vector>
-#include "csv_types.hpp"
 
 namespace csvview {
   // A -> 0, AA -> 26
@@ -14,12 +16,7 @@ namespace csvview {
   // CellRef cr = csvview::parseCellRef("G4");
   CellRef parseCellRef(const std::string& ref);
 
-  // bool isNum(const std::string& cell);
-  // bool isFormula(const std::string& cell);
-
-  // does cell ref contain in range
   // bool containRef(const CellRange&, const CellRef&);
-
   
   // TODOS: std::string getCellName(const CellRef& ref);
   // TODOS: Handle Cell range A1:B2 or B2:A1

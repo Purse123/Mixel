@@ -1,4 +1,3 @@
-#include <iostream>
 #include <string>
 
 #include "csv_parser.hpp"
@@ -24,11 +23,12 @@ int main() {
     std::cout << "\n";
   }
 
-  std::cout << csvview::colNameToIndex("B") << std::endl;
-  std::cout << csvview::indexToColName(27) << std::endl;
+  return 0;
+  
+  std::cout << "col name B -> index: " <<csvview::colNameToIndex("B") << std::endl;
+  std::cout << "index 27 -> col name: " << csvview::indexToColName(27) << std::endl;
   csvview::CellRef ref = csvview::parseCellRef("A1");
   std::cout << "Row: " << ref.row << std::endl
 	    << "Column: " << ref.col << std::endl;
   
-  return 0;
 }

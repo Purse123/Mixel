@@ -2,10 +2,8 @@
 #include "../formula.hpp"
 
 namespace Formula {
-  class SumFunction() : public Function {
+  class SumFunction : public IFunction {
   public:
-    virtual ~Function() = default;
-
-    double evaluate(const std::vector<double>& arg) const override;
+    double evaluate(const std::vector<double>& args) const override;
   };
 }

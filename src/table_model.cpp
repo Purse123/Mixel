@@ -262,9 +262,75 @@ double csvview::TableModel::evaluatePostfix(const std::vector<std::string>& post
 
 double csvview::TableModel::evaluateFunction(const std::string& expr) {
   Formula::FunctionCall call = parseFunction(expr);
+  
+  // @return: std::unique_ptr is a smart pointer
+  // create function via factory
+  std::unique_ptr<Formula::IFunction>
+    formula_func = Formula::FunctionFactory::create(call.name);
 
-  // std::unique_ptr is a smart pointer that owns and manages
+  // TODOS: extractRefsFromFormula()  // accept range give cell refs
+  std::vector<csvview::CellRange> cell_ranges = extractRangesFromFormula(call.args);
+
+  std::vector<csvview::CellRef> cell_refs = expandRanges(cell_ranges);
+
+  std::vector<double> values;
+  for (const CellRef& ref: cell_refs) {
+    values.push_back(evaluateCell(ref));
+  }
+
+  return formula_func->evaluate(values);
 }
+
+std::vector<csvview::CellRange>
+csvview::TableModel::extractRangesFromFormula(const std::string& args) {
+  std::vector<csvview::CellRange> ranges;
+
+  std::stringstream ss(args);
+  std::string token;
+
+  // token by comma
+  while (std::getline(ss, token, ',')) {
+    token = csvview::trimmed(token);
+    if (token.empty()) continue;
+
+    // CellRange handler
+    auto pos = token.find(':');
+
+    if (pos != std::string::npos) {
+      csvview::CellRef from = csvview::parseCellRef(token.substr(0,pos));
+      csvview::CellRef to = csvview::parseCellRef(token.substr(pos + 1));
+      ranges.push_back({from, to});
+    }
+    // single cell value
+    else {
+      CellRef ref = csvview::parseCellRef(token);
+      ranges.push_back({ref, ref});
+    }
+  }
+  
+  return ranges;
+}
+
+std::vector<csvview::CellRef>
+csvview::TableModel::expandRanges(const std::vector<csvview::CellRange>& ranges) {
+  std::vector<CellRef> result;
+
+  for (const auto& range : ranges) {
+    size_t r1 = std::min(range.from.row, range.to.row);
+    size_t r2 = std::max(range.from.row, range.to.row);
+    size_t c1 = std::min(range.from.col, range.to.col);
+    size_t c2 = std::max(range.from.col, range.to.col);
+
+    for (size_t r = r1; r <= r2; ++r) {
+      for (size_t c = c1; c <= c2; ++c) {
+        result.push_back({r, c});
+      }
+    }
+  }
+
+  return result;
+}
+
 // const csvview::Cell& at(const CellRef&) const;
 // csvviewCell& at(const CellRef&);
 // void addRow(const Row&);

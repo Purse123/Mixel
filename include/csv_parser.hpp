@@ -1,3 +1,5 @@
+// csv_parser.hpp
+// Copyright (c) 2026 Pierce Neupane - CC BY 4.0
 #pragma once
 #include <vector>
 #include <string>
