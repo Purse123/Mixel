@@ -67,7 +67,7 @@ namespace csvview {
     Formula::FunctionCall parseFunction(const std::string& expr);
 
     double evaluateExpression(const std::string& expr);
-    
+    double evaluateFunction(const std::string& expr);    
     // TODOS: const Cell& at(const CellRef&) const;
     // TODOS: Cell& at(const CellRef&);
     // TODOS: void addRow(const Row&);
@@ -101,10 +101,5 @@ namespace csvview {
     // Shunting Yard: infix -> postfix
     // --------------------------------
     double evaluatePostfix(const std::vector<std::string>& postfix);
-    
-    // todos
-    double evaluateFunction(const std::string& expr) {
-      return 0.0;
-    }
   };
 }

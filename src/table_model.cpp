@@ -2,6 +2,7 @@
 #include "table_model.hpp"
 #include "formula.hpp"
 #include "cell_method.hpp"
+
 #include <iostream>
 #include <vector>
 #include <cmath>
@@ -257,6 +258,12 @@ double csvview::TableModel::evaluatePostfix(const std::vector<std::string>& post
 
   if (s.size() != 1) throw std::runtime_error("Invalid expression");
   return s.top();
+}
+
+double csvview::TableModel::evaluateFunction(const std::string& expr) {
+  Formula::FunctionCall call = parseFunction(expr);
+
+  // std::unique_ptr is a smart pointer that owns and manages
 }
 // const csvview::Cell& at(const CellRef&) const;
 // csvviewCell& at(const CellRef&);
