@@ -1,6 +1,8 @@
 CC = g++
 CFLAGS = -Wall -Wextra -Wpedantic -O3 -std=c++17
 
+.PHONY: build/main.o build/csv_parser.o build/viewer.o build/cell_method.o build/table_model.o build/sum.o build/avg.o build/formula.o build/pie.o
+
 build/cell_method.o: src/cell_method.cpp
 	$(CC) $^ -c -o $@ $(CFLAGS) -I./include/
 
@@ -19,6 +21,9 @@ build/sum.o: src/functions/sum.cpp
 build/avg.o: src/functions/avg.cpp
 	$(CC) $^ -c -o $@ $(CFLAGS) -I./include/
 
+build/pie.o: src/functions/pie.cpp
+	$(CC) $^ -c -o $@ $(CFLAGS) -I./include/
+
 build/viewer.o: src/viewer.cpp
 	$(CC) $^ -c -o $@ $(CFLAGS) -I./include/
 
@@ -26,8 +31,8 @@ build/main.o: main.cpp
 	$(CC) $^ -c -o $@ $(CFLAGS) -I./include/
 
 
-main: build/main.o build/csv_parser.o build/viewer.o build/cell_method.o build/table_model.o build/sum.o build/avg.o build/formula.o
+main: build/main.o build/csv_parser.o build/viewer.o build/cell_method.o build/table_model.o build/sum.o build/avg.o build/formula.o build/pie.o
 	$(CC) $^ -o $@ $(CFLAGS) -I./include/
 
 clean:
-	rm *~ build/*.o main
+	rm *~ build/*.o main pie_char.purse.sim

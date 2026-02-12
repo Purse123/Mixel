@@ -4,6 +4,7 @@
 #include "formula.hpp"
 #include "functions/sum.hpp"
 #include "functions/avg.hpp"
+#include "functions/pie.hpp"
 
 std::unique_ptr<Formula::IFunction> Formula::FunctionFactory::create(const std::string& name) {
   // weird way of Uppercase conversion
@@ -25,6 +26,8 @@ std::unique_ptr<Formula::IFunction> Formula::FunctionFactory::create(const std::
     return std::make_unique<SumFunction>();
   else if (upper == "AVG" || upper == "AVERAGE")
     return std::make_unique<AvgFunction>();
-
+  else if (upper == "PIE")
+    return std::make_unique<PieFunction>();
+  
   throw std::invalid_argument("Unknown function: " + name);
 }

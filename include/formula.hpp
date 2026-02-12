@@ -24,6 +24,8 @@ namespace Formula {
     virtual ~IFunction() = default;
 
     virtual double evaluate(const std::vector<double>& arg) const = 0;
+    
+    // virtual double evaluate(const std::vector<std::string>& str_arg, const std::vector<double>& arg) const = 0;
   };
 
   
